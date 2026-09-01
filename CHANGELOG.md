@@ -7,6 +7,19 @@ versionamento segue [SemVer](https://semver.org/lang/pt-BR/).
 
 ## [Não publicado]
 
+## [1.0.1] - 2026-09-01
+
+### Corrigido
+
+- A instalação não exige mais chave SSH. A entrada do plugin usava o source type
+  `github`, que faz o Claude Code clonar por `git@github.com`; quem não tem chave
+  configurada recebia `Permission denied (publickey)` e não conseguia instalar. Agora
+  o source é um git URL HTTPS explícito, com o mesmo mecanismo de pin por tag.
+- Os comandos da documentação usam a URL inteira do repositório em
+  `claude plugin marketplace add`. O atalho `owner/repo` também é resolvido por SSH.
+
+A `1.0.0` está publicada mas não é instalável em máquina sem chave SSH. Use a `1.0.1`.
+
 ## [1.0.0] - 2026-09-01
 
 Primeira versão pública.
@@ -47,5 +60,6 @@ Primeira versão pública.
 - O contrato de operação não mora aqui: ele chega pelo campo `instructions` do servidor e
   por `get_playbook`. Divergiu, o playbook do servidor vence.
 
-[Não publicado]: https://github.com/mentoringmx/mmx-skills/compare/v1.0.0...HEAD
+[Não publicado]: https://github.com/mentoringmx/mmx-skills/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/mentoringmx/mmx-skills/releases/tag/v1.0.1
 [1.0.0]: https://github.com/mentoringmx/mmx-skills/releases/tag/v1.0.0
