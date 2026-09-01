@@ -21,7 +21,11 @@ A versão não vai no comando de instalação. Ela está declarada no manifesto 
 repositório: a entrada do plugin aponta para uma tag específica.
 
 ```json
-"source": { "source": "github", "repo": "mentoringmx/mmx-skills", "ref": "v1.0.0" }
+"source": {
+  "source": "url",
+  "url": "https://github.com/mentoringmx/mmx-skills.git",
+  "ref": "v1.0.0"
+}
 ```
 
 O catálogo acompanha o `main`, mas o conteúdo que chega na sua máquina é sempre a árvore
@@ -36,9 +40,13 @@ onde a interface não tem campo para tag.
 Instalar:
 
 ```
-claude plugin marketplace add mentoringmx/mmx-skills
+claude plugin marketplace add https://github.com/mentoringmx/mmx-skills
 claude plugin install mmx-operador@mentoringmx
 ```
+
+Use a URL inteira, não o atalho `mentoringmx/mmx-skills`. O atalho é resolvido por SSH, e
+falha em quem não tem chave SSH configurada no GitHub. Com a URL, o acesso é por HTTPS e
+não pede nada.
 
 Conferir o que foi instalado:
 

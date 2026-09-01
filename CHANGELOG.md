@@ -27,6 +27,12 @@ Primeira versão pública.
   conversão.
 - Documentação de instalação por versão fixada, arquitetura das camadas e segurança.
 
+### Notas de instalação
+
+- No Claude Code, use a URL inteira do repositório em `claude plugin marketplace add`. O
+  atalho `owner/repo` é resolvido por SSH e falha em quem não tem chave configurada no
+  GitHub.
+
 ### Requisitos
 
 - Exige um servidor MMX que exponha `get_bootstrap` e `get_playbook`. Sem eles a skill

@@ -23,7 +23,7 @@ body:
     attributes:
       label: Como reproduzir
       placeholder: |
-        1. claude plugin marketplace add mentoringmx/mmx-skills
+        1. claude plugin marketplace add https://github.com/mentoringmx/mmx-skills
         2. claude plugin install mmx-operador@mentoringmx
         3. ...
     validations:

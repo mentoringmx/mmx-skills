@@ -36,7 +36,7 @@ passo a passo de cada cliente, como conferir o que foi instalado e como remover.
 Claude Code:
 
 ```
-claude plugin marketplace add mentoringmx/mmx-skills
+claude plugin marketplace add https://github.com/mentoringmx/mmx-skills
 claude plugin install mmx-operador@mentoringmx
 ```
 
