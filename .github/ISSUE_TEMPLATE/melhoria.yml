@@ -1,0 +1,46 @@
+name: Melhoria de skill ou comando
+description: O agente se comportou de um jeito e deveria ter se comportado de outro.
+labels: ["melhoria"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Antes de abrir: se o agente chamou os tools na ordem errada, pulou uma etapa,
+        usou um tool descontinuado ou gravou em campo errado, isso é **playbook**, e
+        playbook vive no servidor. Essa issue vai para o time do produto, não para cá.
+        Ver `docs/arquitetura.md`.
+
+  - type: textarea
+    id: observado
+    attributes:
+      label: Comportamento observado
+      description: O que você pediu e o que o agente fez. Cole o trecho da conversa.
+      placeholder: |
+        Pedi: "fecha a sessão da Marina de ontem"
+        O agente: chamou close_event_debrief e parou. Não criou nenhuma task.
+    validations:
+      required: true
+
+  - type: textarea
+    id: esperado
+    attributes:
+      label: Comportamento esperado
+      description: O que ele deveria ter feito, e por quê.
+      placeholder: |
+        Deveria ter criado as tasks dos combinados, com owner e due_date, antes de
+        fechar o debrief.
+    validations:
+      required: true
+
+  - type: input
+    id: comando
+    attributes:
+      label: Skill ou comando envolvido
+      placeholder: "/mmx-fechar-sessao"
+
+  - type: input
+    id: cliente
+    attributes:
+      label: Cliente e versão instalada
+      description: "No Claude Code, `claude plugin list` mostra."
+      placeholder: "Claude Code, mmx-operador 1.0.0"

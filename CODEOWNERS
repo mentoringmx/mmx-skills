@@ -1,0 +1,6 @@
+# Donos do conteúdo que é instalado na máquina de outra pessoa.
+# Mudança aqui muda comportamento de agente contra base de produção.
+
+/skills/          @mentoringmx/mmx-core
+/commands/        @mentoringmx/mmx-core
+/.claude-plugin/  @mentoringmx/mmx-core

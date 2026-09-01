@@ -1,0 +1,14 @@
+{
+  "name": "mmx-operador",
+  "displayName": "MMX Operador",
+  "version": "1.0.0",
+  "description": "Camada de conversa para operar o MentoringMX via MCP: incluir mentorado, atualizar jornada, fechar encontro a partir de transcricao e operar leads no CRM. O contrato de operacao vem do servidor MMX; esta e a camada de conveniencia.",
+  "author": {
+    "name": "MentoringMX",
+    "url": "https://github.com/mentoringmx"
+  },
+  "homepage": "https://github.com/mentoringmx/mmx-skills",
+  "repository": "https://github.com/mentoringmx/mmx-skills",
+  "license": "Apache-2.0",
+  "keywords": ["mentoring", "mcp", "crm", "mentoringmx"]
+}

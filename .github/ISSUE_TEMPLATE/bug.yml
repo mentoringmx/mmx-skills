@@ -1,0 +1,38 @@
+name: Bug
+description: Algo quebrado na instalação, no manifesto ou nos arquivos deste repositório.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Para o agente respondendo errado, use o template **Melhoria**. Este aqui é para
+        coisa quebrada: instalação que falha, comando que não aparece, manifesto inválido.
+
+        Se envolver segurança, não descreva o problema aqui. Ver `docs/seguranca.md`.
+
+  - type: textarea
+    id: oque
+    attributes:
+      label: O que aconteceu
+      description: Inclua a mensagem de erro na íntegra, se houver.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Como reproduzir
+      placeholder: |
+        1. claude plugin marketplace add mentoringmx/mmx-skills
+        2. claude plugin install mmx-operador@mentoringmx
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: cliente
+    attributes:
+      label: Cliente e versão instalada
+      placeholder: "Claude Code 2.82.1, mmx-operador 1.0.0"
+    validations:
+      required: true
