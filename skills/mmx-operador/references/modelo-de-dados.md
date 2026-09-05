@@ -28,7 +28,7 @@ organization  (5 orgs, isolamento por RLS)
                  └─ journey_checklist_items
 ```
 
-## As seis confusões que geram dado errado
+## As sete confusões que geram dado errado
 
 **1. `person` não é `mentee`.**
 Conquista, task, nota e participação em encontro penduram em `mentee_id`. Uma person com duas matrículas tem
@@ -56,6 +56,14 @@ tempo compromisso de agenda e entregável contratual (`counts_as_delivery`), e f
 `convert_lead` cria ou reaproveita a person, marca a conversão e grava a atividade. Criar a
 person à mão e marcar o lead como ganho perde o vínculo, e não há como refazer.
 
+**7. Campo mascarado não é campo vazio.**
+Leitura de pessoa e de mentorado vem mascarada neste canal: documento, endereço, telefone,
+email, nascimento e observações. Cada registro traz `_masked_fields` dizendo o que veio
+mascarado. Tratar isso como ausência produz os dois piores erros do modelo — `update_person`
+sobrescrevendo dado real que só parecia faltar, e pessoa duplicada porque a comparação de
+email nunca bate. Para existência, `find_person_by_contact`. Para o valor real, e só quando
+o operador precisar dele, `get_person_pii`, que é auditado e tem teto por hora.
+
 ## Tools que escrevem em mais de uma tabela
 
 Confira o retorno antes de criar registro complementar, para não duplicar.
@@ -75,7 +83,7 @@ Confira o retorno antes de criar registro complementar, para não duplicar.
 `forbidden` aponta para uma destas, não para erro de argumento:
 
 ```
-people.view / people.manage
+people.view / people.manage / people.pii.view
 mentees.view / mentees.manage
 programs.view / programs.manage
 sessions.view / sessions.manage   (legado)
@@ -87,7 +95,11 @@ outreach.view / outreach.manage
 health.view
 ```
 
-Admin-only: convites, grupos de acesso, `get_audit_events`, seed e cleanup de demo.
+Admin-only: convites, grupos de acesso, `get_audit_events`, campos customizados, seed e
+cleanup de demo.
+
+`people.pii.view` não dispensa o mascaramento neste canal: ela é o que habilita
+`get_person_pii`, que revela um valor por vez, com finalidade declarada e auditoria.
 
 ## Códigos de erro
 

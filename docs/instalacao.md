@@ -24,7 +24,7 @@ repositório: a entrada do plugin aponta para uma tag específica.
 "source": {
   "source": "url",
   "url": "https://github.com/mentoringmx/mmx-skills.git",
-  "ref": "v1.0.1"
+  "ref": "v1.1.0"
 }
 ```
 
