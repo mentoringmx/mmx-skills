@@ -7,6 +7,19 @@ versionamento segue [SemVer](https://semver.org/lang/pt-BR/).
 
 ## [Não publicado]
 
+## [1.1.1] - 2026-09-05
+
+### Corrigido
+
+- O caminho para conectar o servidor estava errado em todo lugar, inclusive na mensagem
+  que a skill mostra quando o MCP não está conectado. Não existe "Configurações →
+  Integração com agentes de IA": a tela se chama **Integração com agentes de IA** e se
+  chega nela pelo aviso *"Opere o MentoringMX conversando com seu agente de IA"*, botão
+  **Conectar**. Quem já dispensou o aviso chega por `/agent-integration`.
+
+Era o passo obrigatório e o único que trava alguém antes de começar. A mensagem antiga
+mandava a pessoa procurar um item de menu que não existe.
+
 ## [1.1.0] - 2026-09-05
 
 Acompanha o mascaramento de dado pessoal que o servidor MMX passou a aplicar no canal MCP.
@@ -85,7 +98,8 @@ Primeira versão pública.
 - O contrato de operação não mora aqui: ele chega pelo campo `instructions` do servidor e
   por `get_playbook`. Divergiu, o playbook do servidor vence.
 
-[Não publicado]: https://github.com/mentoringmx/mmx-skills/compare/v1.1.0...HEAD
+[Não publicado]: https://github.com/mentoringmx/mmx-skills/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/mentoringmx/mmx-skills/releases/tag/v1.1.1
 [1.1.0]: https://github.com/mentoringmx/mmx-skills/releases/tag/v1.1.0
 [1.0.1]: https://github.com/mentoringmx/mmx-skills/releases/tag/v1.0.1
 [1.0.0]: https://github.com/mentoringmx/mmx-skills/releases/tag/v1.0.0

@@ -34,8 +34,9 @@ Não desista da operação por causa disso, e não invente que os tools existem.
 Se o operador pedir algo do MMX e os tools não existirem na sessão, não tente contornar nem
 sugira acesso por outro caminho. Diga em duas linhas:
 
-> O servidor do MentoringMX não está conectado nesta sessão. A configuração fica em
-> Configurações, Integração com agentes de IA, dentro do MMX.
+> O servidor do MentoringMX não está conectado nesta sessão. Dentro do MMX, clique em
+> Conectar no aviso "Opere o MentoringMX conversando com seu agente de IA". Se você já
+> dispensou o aviso, acrescente /agent-integration ao endereço do MMX.
 
 Depois pare. Não peça credencial, não peça URL, não aceite token colado no chat.
 

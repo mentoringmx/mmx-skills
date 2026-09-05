@@ -1,7 +1,7 @@
 # Instalação
 
 **O passo obrigatório não é este.** Antes de qualquer coisa, conecte o servidor MCP do MMX
-pela tela do produto: Configurações → Integração com agentes de IA. Feito isso, seu agente
+pela tela do produto: aviso “Opere o MentoringMX conversando com seu agente de IA” → Conectar. Feito isso, seu agente
 já opera o MentoringMX com o contrato completo, sem instalar nada.
 
 Instalar a skill e os comandos é opcional e posterior. O que eles adicionam é
@@ -24,7 +24,7 @@ repositório: a entrada do plugin aponta para uma tag específica.
 "source": {
   "source": "url",
   "url": "https://github.com/mentoringmx/mmx-skills.git",
-  "ref": "v1.1.0"
+  "ref": "v1.1.1"
 }
 ```
 
