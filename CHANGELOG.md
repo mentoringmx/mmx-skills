@@ -7,6 +7,31 @@ versionamento segue [SemVer](https://semver.org/lang/pt-BR/).
 
 ## [Não publicado]
 
+## [1.1.0] - 2026-09-05
+
+Acompanha o mascaramento de dado pessoal que o servidor MMX passou a aplicar no canal MCP.
+
+### Adicionado
+
+- Seção **Dado pessoal vem mascarado** na skill. Leitura de pessoa e de mentorado devolve
+  documento, endereço, telefone, email, nascimento e observações mascarados, sempre, mesmo
+  para quem tem permissão de ver PII, e cada registro traz `_masked_fields`.
+- A regra que evita os dois erros caros: campo mascarado não é campo vazio. Não se
+  "completa" um campo mascarado com `update_person`, porque isso sobrescreve dado real; e
+  não se deduplica comparando email ou telefone lidos, porque eles nunca batem.
+- Deduplicação por `find_person_by_contact`, que confirma existência sem devolver o
+  documento, nos comandos `/mmx-incluir` e `/mmx-lead` e no exemplo de plano da skill.
+- Aviso de que `get_person_pii` é auditado, exige finalidade declarada e tem teto por hora:
+  serve para quando o operador precisa do dado, não para o agente conferir.
+- Sétima confusão em `references/modelo-de-dados.md`, e `people.pii.view` na lista de
+  permissões.
+
+### Notas
+
+- Dado de saúde, deficiência, restrição alimentar e gênero não é devolvido pelo canal MCP
+  em hipótese nenhuma.
+- Nada aqui substitui o playbook do servidor. Divergiu, o playbook vence.
+
 ## [1.0.1] - 2026-09-01
 
 ### Corrigido
@@ -60,6 +85,7 @@ Primeira versão pública.
 - O contrato de operação não mora aqui: ele chega pelo campo `instructions` do servidor e
   por `get_playbook`. Divergiu, o playbook do servidor vence.
 
-[Não publicado]: https://github.com/mentoringmx/mmx-skills/compare/v1.0.1...HEAD
+[Não publicado]: https://github.com/mentoringmx/mmx-skills/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/mentoringmx/mmx-skills/releases/tag/v1.1.0
 [1.0.1]: https://github.com/mentoringmx/mmx-skills/releases/tag/v1.0.1
 [1.0.0]: https://github.com/mentoringmx/mmx-skills/releases/tag/v1.0.0

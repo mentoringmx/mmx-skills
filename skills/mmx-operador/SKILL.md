@@ -1,6 +1,6 @@
 ---
 name: mmx-operador
-description: Camada de conversa para operar o MentoringMX (MMX) via MCP. Ative quando o pedido envolver incluir ou matricular mentorado, atualizar jornada ou trilha, mover estágio de Kanban, marcar checklist, registrar conquista, sessão, task ou nota de mentorado, lançar saúde ou engajamento, criar ou mover lead no CRM, registrar objeção, converter lead, rodar outreach ou gerenciar participantes de evento. Ative também para fechar uma entrega a partir de transcrição, gravação ou anotação de sessão, quando o operador disser "fecha a sessão", "registra o que rolou na call", "acabei de atender fulano", "analisa essa transcrição e salva", ou anexar uma transcrição. Ative ainda quando o operador disser "cadastra o fulano", "põe na trilha", "entra um lead", "move pra proposta", "converte esse lead", ou colar uma lista de pessoas para incluir em lote, e quando pedir algo do MMX sem ter o servidor MCP conectado, para orientar a conexão. Não ative para leitura pura, onde os tools do MMX bastam sozinhos.
+description: Camada de conversa para operar o MentoringMX (MMX) via MCP. Ative quando o pedido envolver incluir ou matricular mentorado, atualizar jornada ou trilha, mover estágio de Kanban, marcar checklist, registrar conquista, sessão, task ou nota de mentorado, lançar saúde ou engajamento, criar ou mover lead no CRM, registrar objeção, converter lead, rodar outreach ou gerenciar participantes de evento. Ative também para fechar uma entrega a partir de transcrição, gravação ou anotação de sessão, quando o operador disser "fecha a sessão", "registra o que rolou na call", "acabei de atender fulano", "analisa essa transcrição e salva", ou anexar uma transcrição. Ative ainda quando o operador disser "cadastra o fulano", "põe na trilha", "entra um lead", "move pra proposta", "converte esse lead", ou colar uma lista de pessoas para incluir em lote, e quando pedir algo do MMX sem ter o servidor MCP conectado, para orientar a conexão. Ative também quando o pedido envolver dado pessoal de mentorado ou lead, para lembrar que a leitura vem mascarada e como deduplicar sem revelar documento. Não ative para leitura pura, onde os tools do MMX bastam sozinhos.
 ---
 
 # MMX Operador
@@ -51,6 +51,33 @@ idempotente.
 
 Se você lembrar de uma sequência com `update_session`, essa memória está velha: o tool está
 descontinuado e retorna erro sem gravar. Carregue o playbook.
+
+## Dado pessoal vem mascarado
+
+A outra mudança que vale saber antes de gravar qualquer coisa: **leitura de pessoa e de
+mentorado vem mascarada neste canal.** `list_people`, `get_person`, `list_mentees` e
+`get_mentee` devolvem documento, endereço, telefone, email, nascimento e observações
+mascarados, sempre, inclusive para quem tem permissão de ver PII. Cada registro traz
+`_masked_fields` com o que veio mascarado.
+
+**Campo mascarado não é campo vazio.** Daí saem os dois erros caros:
+
+1. **Nunca "complete" um campo mascarado.** Se o telefone veio mascarado e o operador te
+   passou um telefone, não chame `update_person` para preencher: você sobrescreve o que já
+   estava lá, e não há desfazer. Só escreva em campo de PII quando o operador disser que o
+   valor **mudou**.
+2. **Não deduplique comparando email ou telefone lidos.** Eles vêm mascarados e nunca vão
+   bater. Para saber se a pessoa já existe, use `find_person_by_contact`: ele responde a
+   pergunta sem devolver o documento.
+
+`get_person_pii` revela o valor real, e é auditado: exige finalidade declarada, fica
+registrado no acesso e tem teto por hora. Ele existe para quando **o operador** precisa do
+dado. Não o chame para deduplicar, nem para conferir, nem "só para ver" — cada chamada
+consome a cota da organização e deixa rastro que alguém vai ter que justificar.
+
+Dado de saúde, deficiência, restrição alimentar e gênero não é devolvido por este canal em
+hipótese nenhuma. Não peça, não infira e não registre esse tipo de dado em nota, observação
+ou task.
 
 ## Fechamento de encontro a partir de transcrição
 
@@ -106,7 +133,8 @@ Plano de escrita | org: <organização>
 3. move_mentee_journey_stage   <trilha> → "<estágio>"
 4. add_mentee_related_person   <nome> (<papel>)
 
-Dedup: nada encontrado na busca por "<termo>" em pessoas, mentorados e leads.
+Dedup: find_person_by_contact não achou <email ou telefone>; busca por nome em
+mentorados e leads também não.
 Confirma os 4?
 ```
 
@@ -134,6 +162,8 @@ Estão no `instructions` do servidor, mas são os que mais custam quando falham:
 - Task sem `owner` e sem `due_date` não é combinado, é intenção.
 - Nota sensível é `kind="confidential"`. O padrão `general` é visível para a organização.
 - Documento pessoal tem campo próprio na pessoa e nunca vai em texto livre.
+- Campo mascarado não é campo vazio. Não complete, não sobrescreva, não deduplique
+  por ele.
 - Campo de diagnóstico vazio é honesto. Campo deduzido pelo agente é evidência contaminada.
 - Nota de mentor é interna. Não entra em ata sem aprovação item a item.
 
