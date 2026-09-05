@@ -5,6 +5,9 @@ o que aconteceu — "cadastra a Marina no Acelera", "fecha o encontro de ontem",
 lead pelo Instagram" — e o agente monta o plano de escrita, pede sua aprovação e executa
 no MMX.
 
+**[Como funciona e como instalar, em uma página →](https://mentoringmx.github.io/mmx-skills/)**
+Feita para quem vai usar, não para quem vai ler código.
+
 ## Você provavelmente não precisa disto
 
 O servidor MCP do MentoringMX já entrega o contrato de operação completo a qualquer
@@ -41,13 +44,15 @@ claude plugin install mmx-operador@mentoringmx
 ```
 
 Claude Desktop e Cowork instalam pela interface, colando a URL do repositório. O
-`docs/instalacao.md` tem o caminho de menu exato.
+`docs/instalacao.md` tem o caminho de menu exato, e a
+[página de instalação](https://mentoringmx.github.io/mmx-skills/) tem o mesmo passo a
+passo com telas.
 
 ## O que tem aqui
 
 | Item | O que faz | Equivalente em português |
 |---|---|---|
-| Skill `mmx-operador` | Camada de conversa: formato do plano e do ledger, fechamento por transcrição, o que fazer sem o MCP conectado | Ativa sozinha, você não chama |
+| Skill `mmx-operador` | Camada de conversa: formato do plano e do ledger, fechamento por transcrição, cuidado com dado pessoal mascarado, o que fazer sem o MCP conectado | Ativa sozinha, você não chama |
 | `/mmx-carteira` | Panorama de leitura: saúde, encontros sem debrief, tasks vencidas, funil. Não grava nada | "como está minha carteira" |
 | `/mmx-fechar-sessao` | Decompõe a transcrição em debrief, conquistas, tasks, jornada, saúde e notas | "fecha a sessão que acabei de dar" |
 | `/mmx-incluir` | Inclui e matricula mentorado, com deduplicação e posição na trilha | "cadastra o Rafael no Acelera" |
