@@ -24,7 +24,7 @@ próprio, nada disto se aplica a você e você não está perdendo nada.
 
 ## Comece pelo produto
 
-O passo obrigatório é dentro do MMX: **Configurações → Integração com agentes de IA**. É
+O passo obrigatório é dentro do MMX: **aviso “Opere o MentoringMX conversando com seu agente de IA” → Conectar**. É
 lá que você conecta o servidor. A autenticação é OAuth, pelo navegador, e o agente herda
 exatamente as permissões que você já tem.
 

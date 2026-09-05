@@ -163,16 +163,6 @@ figcaption{font-size:.88rem;color:var(--ink-soft);margin-top:.85rem;line-height:
 .cmdline pre{margin:0;white-space:pre}
 .cmdline .p{color:var(--spec-dim);user-select:none}
 
-/* ---------- screenshot placeholder ---------- */
-.shot{
-  border:1.5px dashed var(--rule);border-radius:9px;background:var(--surface-2);
-  padding:1.15rem 1.25rem;margin:1.1rem 0 .3rem;
-}
-.shot .lab{font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;font-weight:600;
-           color:var(--warn);display:block;margin-bottom:.5rem}
-.shot .what{font-weight:600;font-size:.97rem;margin-bottom:.3rem}
-.shot .how{font-size:.88rem;color:var(--ink-soft);line-height:1.5;margin:0}
-
 /* ---------- safety ---------- */
 .safety li{margin-bottom:.7rem}
 
@@ -254,11 +244,19 @@ nome em mentorados e leads também não.</span>
 
   <div class="col">
     <div class="gate">
-      <p style="margin-bottom:.2rem">Conecte o MentoringMX ao seu Claude pela tela do produto:</p>
-      <span class="path">Configurações → Integração com agentes de IA</span>
-      <p class="small" style="margin:.6rem 0 0">A autenticação é pelo navegador. Seu agente
+      <p style="margin-bottom:.7rem">Dentro do MentoringMX, procure este aviso e clique em
+      <strong>Conectar</strong>:</p>
+      <p class="path" style="margin:0 0 .8rem">“Opere o MentoringMX conversando com seu agente de IA”</p>
+      <p style="margin-bottom:.7rem">Na tela <strong>Integração com agentes de IA</strong> que abrir:
+      escolha o seu cliente — Claude Code, Claude Desktop, ChatGPT ou outro — e
+      <strong>copie o endereço que aparece ali</strong>. É esse endereço que você cola no Claude.</p>
+      <p class="small" style="margin:0">A autenticação acontece em seguida, no navegador. Seu agente
       passa a enxergar exatamente o que <em>você</em> já enxerga no MMX, nem um registro a mais.</p>
     </div>
+
+    <p class="small" style="margin-top:1rem"><strong>Já dispensou esse aviso?</strong> Ele some depois
+    de conectado e também some se você fechar no X. Para voltar, acrescente
+    <code>/agent-integration</code> ao endereço do MMX no seu navegador.</p>
 
     <p style="margin-top:1.6rem"><strong>Feito isso, acabou.</strong> Seu agente já sabe operar o
     MMX: as regras, o modelo de dados e a ordem certa de cada operação chegam junto com a
@@ -513,20 +511,13 @@ próximo       a55e…   criado para 15/09</pre>
       </ol>
       <div class="cmdline"><pre>https://github.com/mentoringmx/mmx-skills</pre></div>
 
-      <div class="shot">
-        <span class="lab">Screenshot a inserir</span>
-        <p class="what">O menu Customize aberto na aba Plugins</p>
-        <p class="how">Capture a barra lateral esquerda com o item <em>Customize</em> visível
-        e o painel aberto na aba <em>Plugins</em>, com o botão <strong>+</strong> de
-        <em>Personal plugins</em> à vista. Recorte na largura do painel, sem pegar a conversa.</p>
-      </div>
+      <!-- IMAGEM PENDENTE — menu Customize
+           Barra lateral esquerda com Customize visivel e o painel aberto na aba Plugins,
+           com o botao + de Personal plugins a vista. Recortar na largura do painel. -->
 
-      <div class="shot">
-        <span class="lab">Screenshot a inserir</span>
-        <p class="what">O campo “Add from a repository” com o endereço colado</p>
-        <p class="how">Capture o diálogo com a URL já preenchida, antes de confirmar. É o
-        passo em que as pessoas mais travam.</p>
-      </div>
+      <!-- IMAGEM PENDENTE — dialogo Add from a repository
+           O dialogo com a URL ja preenchida, antes de confirmar. E o passo em que as
+           pessoas mais travam. -->
 
       <p class="small" style="margin-top:1.2rem"><strong>No Cowork:</strong> abra a aba
       <em>Cowork</em> primeiro e depois siga exatamente os mesmos cinco passos.</p>
@@ -555,17 +546,9 @@ próximo       a55e…   criado para 15/09</pre>
     </div>
   </div>
 
-  <div class="card col" style="margin-top:1.6rem;max-width:none">
-    <div class="shot" style="margin:0">
-      <span class="lab">Screenshot a inserir</span>
-      <p class="what">A skill funcionando: um plano de escrita real na tela</p>
-      <p class="how">Peça algo simples numa organização de teste — “cadastra a Marina no
-      Acelera” — e capture o plano em bloco com a pergunta de confirmação no fim.
-      <strong>Use dados fictícios</strong>: esta imagem vai para a tela do produto e para
-      quem ainda não é cliente. É o print que mais convence, porque mostra que nada é
-      gravado sem você mandar.</p>
-    </div>
-  </div>
+  <!-- IMAGEM PENDENTE — plano de escrita real
+           Pedir algo simples numa organizacao de teste e capturar o plano em bloco com a
+           pergunta de confirmacao no fim. USAR DADOS FICTICIOS: a pagina e publica. -->
 </section>
 
 <!-- ============ SEGURANÇA ============ -->
@@ -585,6 +568,13 @@ próximo       a55e…   criado para 15/09</pre>
       <li><strong>A regra final é do servidor.</strong> Se a skill instalada na sua máquina
       discordar do que o MMX manda, o MMX vence. Ela é uma cópia; ele é a fonte.</li>
     </ul>
+
+    <div class="gate" style="margin-top:2rem">
+      <p style="margin:0 0 .4rem"><strong>Travou em algum passo?</strong></p>
+      <p class="small" style="margin:0">Fale com quem cuida da sua conta no MentoringMX. Você não
+      precisa resolver isso sozinho, e nenhum passo aqui exige conhecimento técnico —
+      se algum parecer exigir, é a instrução que está ruim, não você.</p>
+    </div>
   </div>
 </section>
 
