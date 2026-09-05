@@ -1,0 +1,599 @@
+<title>Operar o MMX conversando</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --ground:#f4f7fa;
+  --surface:#ffffff;
+  --surface-2:#e9eff6;
+  --ink:#0f1b2d;
+  --ink-soft:#43536b;
+  --ink-faint:#6d7f97;
+  --rule:#d5dfea;
+  --rule-soft:#e4ebf3;
+  --accent:#0b5f8a;
+  --accent-bright:#0ea5e9;
+  --ok:#15803d;
+  --warn:#a4600a;
+  --risk:#b3241f;
+  --spec-bg:#0d1a2b;
+  --spec-fg:#d3e2f0;
+  --spec-dim:#7b93ad;
+  --shadow:0 1px 2px rgba(15,27,45,.05), 0 8px 24px -12px rgba(15,27,45,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#080f1a;
+    --surface:#0f1c2c;
+    --surface-2:#16253a;
+    --ink:#dce7f3;
+    --ink-soft:#a2b5cb;
+    --ink-faint:#7a8da5;
+    --rule:#21344c;
+    --rule-soft:#1a2a3e;
+    --accent:#63c4f2;
+    --accent-bright:#38bdf8;
+    --ok:#4ade80;
+    --warn:#fbbf24;
+    --risk:#f87171;
+    --spec-bg:#050b14;
+    --spec-fg:#cadcec;
+    --spec-dim:#6f849c;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#080f1a;
+  --surface:#0f1c2c;
+  --surface-2:#16253a;
+  --ink:#dce7f3;
+  --ink-soft:#a2b5cb;
+  --ink-faint:#7a8da5;
+  --rule:#21344c;
+  --rule-soft:#1a2a3e;
+  --accent:#63c4f2;
+  --accent-bright:#38bdf8;
+  --ok:#4ade80;
+  --warn:#fbbf24;
+  --risk:#f87171;
+  --spec-bg:#050b14;
+  --spec-fg:#cadcec;
+  --spec-dim:#6f849c;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+.col{max-width:64ch}
+
+/* ---------- type ---------- */
+h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:500;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.5rem,6vw,3.9rem);line-height:1.04;letter-spacing:-.018em}
+h2{font-size:clamp(1.7rem,3.4vw,2.25rem);line-height:1.14;letter-spacing:-.012em}
+h3{font-size:1.2rem;line-height:1.3;font-weight:600}
+p{margin:0 0 1.05em}
+a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;border-radius:3px}
+strong{font-weight:600;color:var(--ink)}
+code{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.87em;background:var(--surface-2);
+     padding:.12em .38em;border-radius:3px;color:var(--ink)}
+.eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+         color:var(--ink-faint);margin:0 0 .9rem}
+.lede{font-size:1.2rem;line-height:1.55;color:var(--ink-soft)}
+.small{font-size:.92rem;color:var(--ink-soft)}
+
+/* ---------- sections ---------- */
+section{padding:clamp(3.5rem,7vw,5.5rem) 0;border-top:1px solid var(--rule-soft)}
+section:first-of-type{border-top:0}
+.sechead{margin-bottom:2rem}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(3rem,7vw,5rem);padding-bottom:clamp(2.5rem,5vw,4rem);border-top:0}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:2.6rem;align-items:start}
+@media(min-width:940px){.hero-grid{grid-template-columns:1.02fr .98fr;gap:3.2rem}}
+.tagline{color:var(--ink-soft);font-size:1.22rem;line-height:1.55;margin-top:1.3rem}
+
+/* ---------- specimen (plano / ledger) ---------- */
+.spec{
+  background:var(--spec-bg);color:var(--spec-fg);border-radius:10px;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.79rem;line-height:1.72;
+  padding:1.25rem 1.35rem;overflow-x:auto;box-shadow:var(--shadow);
+}
+.spec pre{margin:0;white-space:pre}
+.spec .dim{color:var(--spec-dim)}
+.spec .hl{color:#7fd4ff}
+.spec .ok{color:#6ee7a0}
+.spec .cap{display:block;color:var(--spec-dim);font-size:.72rem;letter-spacing:.09em;
+           text-transform:uppercase;margin-bottom:.7rem}
+
+/* ---------- cards ---------- */
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:1.5rem 1.6rem}
+.grid2{display:grid;gap:1.1rem;grid-template-columns:minmax(0,1fr)}
+@media(min-width:800px){.grid2{grid-template-columns:1fr 1fr}}
+
+/* ---------- the mandatory step ---------- */
+.gate{
+  background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent-bright);
+  border-radius:8px;padding:1.5rem 1.7rem;box-shadow:var(--shadow);
+}
+.path{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.95rem;color:var(--ink);
+      display:inline-block;margin:.5rem 0 .3rem}
+
+/* ---------- commands table ---------- */
+.cmds{width:100%;border-collapse:collapse;font-size:.96rem}
+.cmds th{text-align:left;font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;
+         color:var(--ink-faint);font-weight:600;padding:0 0 .7rem;border-bottom:1px solid var(--rule)}
+.cmds td{padding:.85rem 1.4rem .85rem 0;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+.cmds td:last-child{padding-right:0}
+.cmds .k{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.86rem;color:var(--accent);white-space:nowrap}
+.cmds .say{color:var(--ink-soft);font-style:italic}
+.tablewrap{overflow-x:auto}
+
+/* ---------- figures ---------- */
+figure{margin:0}
+figure svg{display:block;width:100%;max-width:100%;height:auto}
+figcaption{font-size:.88rem;color:var(--ink-soft);margin-top:.85rem;line-height:1.5}
+.figbox{background:var(--surface);border:1px solid var(--rule);border-radius:10px;
+        padding:1.5rem 1.5rem 1.3rem;box-shadow:var(--shadow)}
+
+/* ---------- install ---------- */
+.steps{list-style:none;counter-reset:s;padding:0;margin:1.2rem 0 0}
+.steps li{counter-increment:s;position:relative;padding-left:2.4rem;margin-bottom:.95rem}
+.steps li::before{
+  content:counter(s);position:absolute;left:0;top:.06em;
+  width:1.6rem;height:1.6rem;border-radius:50%;background:var(--surface-2);color:var(--accent);
+  font-family:"IBM Plex Mono",monospace;font-size:.78rem;font-weight:500;
+  display:grid;place-items:center;
+}
+.cmdline{
+  background:var(--spec-bg);color:var(--spec-fg);border-radius:8px;padding:.95rem 1.1rem;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.82rem;line-height:1.85;
+  overflow-x:auto;margin:.9rem 0 0;
+}
+.cmdline pre{margin:0;white-space:pre}
+.cmdline .p{color:var(--spec-dim);user-select:none}
+
+/* ---------- screenshot placeholder ---------- */
+.shot{
+  border:1.5px dashed var(--rule);border-radius:9px;background:var(--surface-2);
+  padding:1.15rem 1.25rem;margin:1.1rem 0 .3rem;
+}
+.shot .lab{font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;font-weight:600;
+           color:var(--warn);display:block;margin-bottom:.5rem}
+.shot .what{font-weight:600;font-size:.97rem;margin-bottom:.3rem}
+.shot .how{font-size:.88rem;color:var(--ink-soft);line-height:1.5;margin:0}
+
+/* ---------- safety ---------- */
+.safety li{margin-bottom:.7rem}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--rule);padding:2.4rem 0 3.4rem;font-size:.9rem;color:var(--ink-soft)}
+.meta{display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;align-items:baseline}
+.ver{font-family:"IBM Plex Mono",monospace;font-size:.82rem;color:var(--ink-faint)}
+
+
+/* ---------- diagramas ---------- */
+.dg text{font-family:"IBM Plex Sans",-apple-system,sans-serif;fill:var(--ink)}
+.dg .t-soft{fill:var(--ink-soft)}
+.dg .t-faint{fill:var(--ink-faint)}
+.dg .t-accent{fill:var(--accent)}
+.dg .t-ok{fill:var(--ok)}
+.dg .t-risk{fill:var(--risk)}
+.dg .b{font-weight:600}
+.dg .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.dg .bx{fill:var(--surface-2);stroke:var(--rule);stroke-width:1}
+.dg .bx-accent{fill:var(--surface-2);stroke:var(--accent);stroke-width:1.5}
+.dg .bx-plain{fill:var(--surface);stroke:var(--ink);stroke-width:1.5}
+.dg .bx-focus{fill:var(--surface);stroke:var(--accent);stroke-width:2}
+.dg .bx-ok{fill:var(--surface-2);stroke:var(--ok);stroke-width:1.5}
+.dg .bx-dash{fill:none;stroke:var(--ink-faint);stroke-width:1.5;stroke-dasharray:6 4}
+.dg .out-ok{fill:none;stroke:var(--ok);stroke-width:1.5}
+.dg .out-risk{fill:none;stroke:var(--risk);stroke-width:1.5}
+.dg .ln{stroke:var(--ink-faint);stroke-width:1.6;fill:none}
+.dg .ln-accent{stroke:var(--accent);stroke-width:1.8;fill:none}
+.dg .ln-ok{stroke:var(--ok);stroke-width:1.8;fill:none}
+.dg .ln-risk{stroke:var(--risk);stroke-width:1.6;fill:none}
+.dg .ln-dash{stroke:var(--ink-faint);stroke-width:1.5;stroke-dasharray:6 4;fill:none}
+.dg .hr{stroke:var(--rule);stroke-width:1}
+.dg .mk{fill:var(--ink-faint)}
+.dg .mk-accent{fill:var(--accent)}
+.dg .mk-ok{fill:var(--ok)}
+.dg .mk-risk{fill:var(--risk)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <p class="eyebrow">MentoringMX · skill para agentes de IA</p>
+      <h1>Você conta o que<br>aconteceu. Ele registra.</h1>
+      <p class="tagline">Uma camada de conversa para operar o MentoringMX falando com
+      um agente de IA. Você descreve o encontro, o lead, a mudança de trilha — e ele
+      monta o plano, <strong>espera sua aprovação</strong> e grava.</p>
+      <p class="small" style="margin-top:1.4rem">
+      Opcional. O MMX já opera com IA sem instalar nada — <a href="#comece">comece por aqui</a>.</p>
+    </div>
+
+    <div class="spec">
+      <span class="cap">o que ele te mostra antes de gravar</span>
+<pre><span class="dim">Plano de escrita | org: Mentoria Alta Performance</span>
+
+1. create_person          Marina Ribeiro, marina@clinica.com.br
+2. create_enrollment      programa <span class="hl">"Acelera"</span>, ticket R$ 24.000,
+                          12 sessões, início 09/09, assento simples
+3. move_mentee_journey_stage   Acelera → <span class="hl">"Diagnóstico"</span>
+4. add_mentee_related_person   Paulo Ribeiro (sócio)
+
+<span class="dim">Dedup: find_person_by_contact não achou o email; busca por
+nome em mentorados e leads também não.</span>
+<span class="ok">Confirma os 4?</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMECE PELO PRODUTO ============ -->
+<section id="comece">
+  <div class="col sechead">
+    <p class="eyebrow">O passo obrigatório</p>
+    <h2>Antes de instalar qualquer coisa</h2>
+  </div>
+
+  <div class="col">
+    <div class="gate">
+      <p style="margin-bottom:.2rem">Conecte o MentoringMX ao seu Claude pela tela do produto:</p>
+      <span class="path">Configurações → Integração com agentes de IA</span>
+      <p class="small" style="margin:.6rem 0 0">A autenticação é pelo navegador. Seu agente
+      passa a enxergar exatamente o que <em>você</em> já enxerga no MMX, nem um registro a mais.</p>
+    </div>
+
+    <p style="margin-top:1.6rem"><strong>Feito isso, acabou.</strong> Seu agente já sabe operar o
+    MMX: as regras, o modelo de dados e a ordem certa de cada operação chegam junto com a
+    conexão. Quem só quer usar o sistema conversando não precisa de mais nada.</p>
+
+    <p>A skill desta página é conveniência para quem usa Claude Code, Claude Desktop ou Cowork.
+    Ela não destrava recurso nenhum — ela ajusta o <em>jeito</em> da conversa.</p>
+  </div>
+
+  <div class="figbox" style="margin-top:2.4rem">
+    <figure>
+      <svg class="dg" viewBox="0 0 760 250" role="img" aria-label="O servidor do MMX entrega as regras e as sequências ao agente automaticamente, sem instalação. A skill instalada acrescenta só o formato da conversa, e é opcional.">
+        <defs>
+          <marker id="m1a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="mk-accent" d="M0,0 L10,5 L0,10 z"/>
+          </marker>
+          <marker id="m1b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="mk" d="M0,0 L10,5 L0,10 z"/>
+          </marker>
+        </defs>
+
+        <rect class="bx-accent" x="8" y="52" width="196" height="94" rx="8"/>
+        <text class="b" x="106" y="88" text-anchor="middle" font-size="14.5">Servidor do MMX</text>
+        <text class="t-soft" x="106" y="110" text-anchor="middle" font-size="11.5">regras, modelo de dados</text>
+        <text class="t-soft" x="106" y="127" text-anchor="middle" font-size="11.5">e sequência de cada operação</text>
+
+        <rect class="bx-plain" x="300" y="52" width="160" height="94" rx="8"/>
+        <text class="b" x="380" y="94" text-anchor="middle" font-size="14.5">Seu agente</text>
+        <text class="t-soft" x="380" y="115" text-anchor="middle" font-size="11.5">no Claude</text>
+
+        <rect class="bx-dash" x="556" y="52" width="196" height="94" rx="8"/>
+        <text class="t-soft b" x="654" y="88" text-anchor="middle" font-size="14.5">Esta skill</text>
+        <text class="t-faint" x="654" y="110" text-anchor="middle" font-size="11.5">formato do plano,</text>
+        <text class="t-faint" x="654" y="127" text-anchor="middle" font-size="11.5">fechamento por transcrição</text>
+
+        <line class="ln-accent" x1="204" y1="99" x2="292" y2="99" marker-end="url(#m1a)"/>
+        <text class="t-accent b" x="248" y="88" text-anchor="middle" font-size="10.5">automático</text>
+        <text class="t-faint" x="248" y="118" text-anchor="middle" font-size="10.5">nada a instalar</text>
+
+        <line class="ln-dash" x1="552" y1="99" x2="470" y2="99" marker-end="url(#m1b)"/>
+        <text class="t-faint" x="511" y="88" text-anchor="middle" font-size="10.5">opcional</text>
+        <text class="t-faint" x="511" y="118" text-anchor="middle" font-size="10.5">você instala</text>
+
+        <line class="hr" x1="8" y1="186" x2="752" y2="186"/>
+        <text class="t-soft" x="8" y="212" font-size="12">Tire a caixa tracejada e o agente continua operando o MMX com segurança.</text>
+        <text class="t-soft" x="8" y="232" font-size="12">Tire a caixa da esquerda e não existe operação nenhuma.</text>
+      </svg>
+      <figcaption>As duas camadas. O contrato de operação mora no servidor e chega sozinho;
+      a skill só acrescenta o formato da conversa.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ IMPACTO ============ -->
+<section>
+  <div class="col sechead">
+    <p class="eyebrow">O que muda no seu dia</p>
+    <h2>A call acabou. O registro também.</h2>
+  </div>
+
+  <div class="col">
+    <p>Fechar um encontro é onde mais se perde informação: você lê a transcrição, escreve um
+    resumo bonito, joga num campo de texto — e some a conquista, some o combinado com prazo,
+    some o avanço de trilha. Na hora da renovação não existe nada estruturado para mostrar.</p>
+    <p>Com a skill, um encontro nunca termina em um registro só. Você diz
+    <em>“fecha a sessão que acabei de dar”</em>, anexa a transcrição, e ele decompõe.</p>
+  </div>
+
+  <div class="figbox" style="margin:2.2rem 0 2.4rem">
+    <figure>
+      <svg class="dg" viewBox="0 0 760 176" role="img" aria-label="Fluxo: da transcrição o agente extrai itens com âncora, monta um plano, espera a aprovação do operador, e só então grava e devolve o ledger com os identificadores.">
+        <defs>
+          <marker id="m2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="mk" d="M0,0 L10,5 L0,10 z"/>
+          </marker>
+          <marker id="m2b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="mk-ok" d="M0,0 L10,5 L0,10 z"/>
+          </marker>
+        </defs>
+
+        <rect class="bx" x="4" y="40" width="128" height="60" rx="7"/>
+        <text class="b" x="68" y="66" text-anchor="middle" font-size="13">Transcrição</text>
+        <text class="t-soft" x="68" y="84" text-anchor="middle" font-size="11">ou anotação</text>
+
+        <rect class="bx" x="182" y="40" width="140" height="60" rx="7"/>
+        <text class="b" x="252" y="66" text-anchor="middle" font-size="13">Extração</text>
+        <text class="t-soft" x="252" y="84" text-anchor="middle" font-size="11">cada item com a citação</text>
+
+        <rect class="bx-focus" x="372" y="32" width="146" height="76" rx="7"/>
+        <text class="b" x="445" y="60" text-anchor="middle" font-size="13">Plano</text>
+        <text class="t-soft" x="445" y="78" text-anchor="middle" font-size="11">você lê e aprova</text>
+        <text class="t-accent b" x="445" y="95" text-anchor="middle" font-size="11">nada gravado ainda</text>
+
+        <rect class="bx-ok" x="568" y="40" width="188" height="60" rx="7"/>
+        <text class="b" x="662" y="64" text-anchor="middle" font-size="13">Ledger</text>
+        <text class="t-soft" x="662" y="83" text-anchor="middle" font-size="11">tudo que gravou, com id</text>
+
+        <line class="ln" x1="134" y1="70" x2="174" y2="70" marker-end="url(#m2a)"/>
+        <line class="ln" x1="324" y1="70" x2="364" y2="70" marker-end="url(#m2a)"/>
+        <line class="ln-ok" x1="520" y1="70" x2="560" y2="70" marker-end="url(#m2b)"/>
+        <text class="t-ok b" x="540" y="58" text-anchor="middle" font-size="10.5">você</text>
+        <text class="t-ok b" x="540" y="92" text-anchor="middle" font-size="10.5">aprova</text>
+
+        <text class="t-soft" x="4" y="146" font-size="12">A aprovação é uma só, no bloco inteiro — não uma pergunta por registro.</text>
+        <text class="t-soft" x="4" y="165" font-size="12">Mudou de ideia num item? Ele remonta o plano e pergunta de novo.</text>
+      </svg>
+      <figcaption>O ciclo de um fechamento. O portão é a aprovação: antes dela, nada
+      entra na sua base.</figcaption>
+    </figure>
+  </div>
+
+  <div class="spec col" style="max-width:none">
+    <span class="cap">e no fim, o recibo</span>
+<pre><span class="dim">Ledger | Mentoria Alta Performance | Marina Ribeiro</span>
+
+encontro      7a1c…   debrief fechado, <span class="ok">entrega creditada (1)</span>
+conquista     b93f…   Primeiro contrato B2B, R$ 40.000 <span class="dim">[business]</span>
+task          2e56…   Planilha de custo revisada    <span class="dim">owner=mentee, venc. 04/09</span>
+task          9db0…   3 currículos triados          <span class="dim">owner=mentor, venc. 08/09</span>
+checklist     Definir preço de entrada, marcado
+saúde         healthy → <span class="hl">attention</span> (eng. 70)
+nota          c417…   confidencial, ligada ao encontro
+próximo       a55e…   criado para 15/09</pre>
+  </div>
+  <p class="small col" style="margin-top:1rem">Oito registros de uma call, cada um no lugar
+  certo. O combinado virou tarefa com dono e prazo — não uma linha de texto que ninguém cobra.</p>
+</section>
+
+<!-- ============ COMANDOS ============ -->
+<section>
+  <div class="col sechead">
+    <p class="eyebrow">Cinco atalhos</p>
+    <h2>Se preferir digitar</h2>
+  </div>
+  <div class="col">
+    <p>A skill funciona sozinha, com você falando naturalmente. Os comandos existem só para
+    quem prefere um atalho curto a uma frase.</p>
+  </div>
+
+  <div class="tablewrap" style="margin-top:1.6rem">
+    <table class="cmds">
+      <thead>
+        <tr><th>Atalho</th><th>Ou simplesmente diga</th><th>O que faz</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="k">/mmx-carteira</td>
+          <td class="say">“como está minha carteira”</td>
+          <td>Saúde, encontros sem fechamento, tarefas vencidas e funil. Só lê, não grava nada.</td>
+        </tr>
+        <tr>
+          <td class="k">/mmx-fechar-sessao</td>
+          <td class="say">“fecha a sessão que acabei de dar”</td>
+          <td>Decompõe a transcrição em fechamento, conquistas, tarefas, trilha, saúde e notas.</td>
+        </tr>
+        <tr>
+          <td class="k">/mmx-incluir</td>
+          <td class="say">“cadastra o Rafael no Acelera”</td>
+          <td>Inclui e matricula, checando duplicata e posicionando na trilha.</td>
+        </tr>
+        <tr>
+          <td class="k">/mmx-jornada</td>
+          <td class="say">“põe a Marina na próxima etapa”</td>
+          <td>Move estágio, marca checklist, lança saúde com o motivo.</td>
+        </tr>
+        <tr>
+          <td class="k">/mmx-lead</td>
+          <td class="say">“entrou um lead novo”</td>
+          <td>Registra e movimenta lead, com atividade, objeção e conversão.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ PII ============ -->
+<section>
+  <div class="col sechead">
+    <p class="eyebrow">Dado pessoal</p>
+    <h2>Ele não vê o CPF do seu mentorado</h2>
+  </div>
+
+  <div class="col">
+    <p>Documento, endereço, telefone, e-mail e data de nascimento chegam <strong>mascarados</strong>
+    ao agente. Sempre — inclusive quando você mesmo tem permissão para vê-los no sistema.</p>
+    <p>Isso cria uma armadilha sutil, e a skill existe em parte para desarmá-la:
+    <strong>campo mascarado parece campo vazio</strong>.</p>
+  </div>
+
+  <div class="figbox" style="margin:2rem 0 1.6rem">
+    <figure>
+      <svg class="dg" viewBox="0 0 760 250" role="img" aria-label="Um telefone mascarado leva a dois caminhos: tratar como vazio e sobrescrever o dado real, ou perguntar ao servidor se o contato já existe, que é o caminho correto.">
+        <defs>
+          <marker id="m3a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="mk-risk" d="M0,0 L10,5 L0,10 z"/>
+          </marker>
+          <marker id="m3b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="mk-ok" d="M0,0 L10,5 L0,10 z"/>
+          </marker>
+        </defs>
+
+        <rect class="bx" x="4" y="86" width="212" height="78" rx="7"/>
+        <text class="t-soft" x="20" y="112" font-size="11.5">O agente lê</text>
+        <text class="mono" x="20" y="136" font-size="13">telefone: (11) ••••-••12</text>
+        <text class="mono t-faint" x="20" y="154" font-size="10.5">_masked_fields: [telefone]</text>
+
+        <line class="ln-risk" x1="218" y1="112" x2="286" y2="62" marker-end="url(#m3a)"/>
+        <rect class="out-risk" x="292" y="18" width="464" height="76" rx="7"/>
+        <text class="t-risk b" x="312" y="44" font-size="12.5">✗  “está vazio, vou preencher”</text>
+        <text class="t-soft" x="312" y="65" font-size="11.5">grava por cima do telefone verdadeiro, que estava lá o tempo todo.</text>
+        <text class="t-soft" x="312" y="83" font-size="11.5">Não há desfazer.</text>
+
+        <line class="ln-ok" x1="218" y1="140" x2="286" y2="190" marker-end="url(#m3b)"/>
+        <rect class="out-ok" x="292" y="156" width="464" height="76" rx="7"/>
+        <text class="t-ok b" x="312" y="182" font-size="12.5">✓  pergunta ao servidor se o contato já existe</text>
+        <text class="t-soft" x="312" y="203" font-size="11.5">a comparação acontece lá dentro, contra o valor real.</text>
+        <text class="t-soft" x="312" y="221" font-size="11.5">Volta só “existe / não existe” — o número nunca aparece.</text>
+      </svg>
+      <figcaption>A armadilha do campo mascarado, e o caminho que a evita. É a diferença
+      entre uma base limpa e uma pessoa duplicada que ninguém consegue mesclar depois.</figcaption>
+    </figure>
+  </div>
+
+  <div class="col">
+    <p class="small">Dado de saúde, deficiência, restrição alimentar e gênero não chega ao
+    agente em hipótese nenhuma — nem mascarado.</p>
+  </div>
+</section>
+
+<!-- ============ INSTALAÇÃO ============ -->
+<section id="instalar">
+  <div class="col sechead">
+    <p class="eyebrow">Instalação</p>
+    <h2>Cinco minutos, uma vez só</h2>
+  </div>
+  <div class="col">
+    <p>Nenhum passo pede token, senha ou chave. Se alguma instrução pedir, ela não veio daqui.</p>
+  </div>
+
+  <div class="grid2" style="margin-top:1.8rem">
+
+    <div class="card">
+      <h3>No Claude web e no app do computador</h3>
+      <p class="small" style="margin-top:.5rem">O caminho é o mesmo nos dois.</p>
+      <ol class="steps">
+        <li>Abra o menu <strong>Customize</strong>, na barra lateral esquerda.</li>
+        <li>Vá na aba <strong>Plugins</strong>.</li>
+        <li>Em <em>Personal plugins</em>, clique no botão <strong>+</strong> e escolha
+            <strong>Add from a repository</strong>.</li>
+        <li>Cole o endereço do repositório e confirme.</li>
+        <li>Instale o plugin <strong>mmx-operador</strong> na lista que aparecer.</li>
+      </ol>
+      <div class="cmdline"><pre>https://github.com/mentoringmx/mmx-skills</pre></div>
+
+      <div class="shot">
+        <span class="lab">Screenshot a inserir</span>
+        <p class="what">O menu Customize aberto na aba Plugins</p>
+        <p class="how">Capture a barra lateral esquerda com o item <em>Customize</em> visível
+        e o painel aberto na aba <em>Plugins</em>, com o botão <strong>+</strong> de
+        <em>Personal plugins</em> à vista. Recorte na largura do painel, sem pegar a conversa.</p>
+      </div>
+
+      <div class="shot">
+        <span class="lab">Screenshot a inserir</span>
+        <p class="what">O campo “Add from a repository” com o endereço colado</p>
+        <p class="how">Capture o diálogo com a URL já preenchida, antes de confirmar. É o
+        passo em que as pessoas mais travam.</p>
+      </div>
+
+      <p class="small" style="margin-top:1.2rem"><strong>No Cowork:</strong> abra a aba
+      <em>Cowork</em> primeiro e depois siga exatamente os mesmos cinco passos.</p>
+    </div>
+
+    <div class="card">
+      <h3>No Claude Code</h3>
+      <p class="small" style="margin-top:.5rem">Dois comandos no terminal.</p>
+      <div class="cmdline"><pre><span class="p">$ </span>claude plugin marketplace add https://github.com/mentoringmx/mmx-skills
+<span class="p">$ </span>claude plugin install mmx-operador@mentoringmx</pre></div>
+      <p class="small" style="margin-top:1rem">Use o endereço inteiro, não o atalho
+      <code>mentoringmx/mmx-skills</code> — o atalho tenta conectar por SSH e falha em quem
+      não tem chave configurada no GitHub.</p>
+
+      <p style="margin-top:1.4rem"><strong>Conferir o que entrou</strong></p>
+      <div class="cmdline"><pre><span class="p">$ </span>claude plugin details mmx-operador@mentoringmx</pre></div>
+      <p class="small" style="margin-top:.8rem">Deve mostrar a versão, a skill e os cinco
+      comandos — e nada além disso: zero agentes, zero hooks, zero servidores extras.</p>
+
+      <p style="margin-top:1.4rem"><strong>Atualizar</strong></p>
+      <div class="cmdline"><pre><span class="p">$ </span>claude plugin update mmx-operador@mentoringmx</pre></div>
+
+      <p style="margin-top:1.4rem"><strong>Remover</strong></p>
+      <div class="cmdline"><pre><span class="p">$ </span>claude plugin uninstall mmx-operador@mentoringmx
+<span class="p">$ </span>claude plugin marketplace remove mentoringmx</pre></div>
+    </div>
+  </div>
+
+  <div class="card col" style="margin-top:1.6rem;max-width:none">
+    <div class="shot" style="margin:0">
+      <span class="lab">Screenshot a inserir</span>
+      <p class="what">A skill funcionando: um plano de escrita real na tela</p>
+      <p class="how">Peça algo simples numa organização de teste — “cadastra a Marina no
+      Acelera” — e capture o plano em bloco com a pergunta de confirmação no fim.
+      <strong>Use dados fictícios</strong>: esta imagem vai para a tela do produto e para
+      quem ainda não é cliente. É o print que mais convence, porque mostra que nada é
+      gravado sem você mandar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEGURANÇA ============ -->
+<section>
+  <div class="col sechead">
+    <p class="eyebrow">Segurança</p>
+    <h2>O que ele pode e o que não pode</h2>
+  </div>
+  <div class="col">
+    <ul class="safety">
+      <li><strong>Ele enxerga o que você enxerga.</strong> A conexão herda as suas permissões
+      no MMX. Um vendedor não passa a ver a base inteira porque conectou um agente.</li>
+      <li><strong>Nada é gravado sem aprovação.</strong> O plano vem antes da escrita, sempre,
+      e a confirmação é sua.</li>
+      <li><strong>Nenhuma senha trafega pelo chat.</strong> A autenticação acontece no
+      navegador, na tela do MMX. Não cole token em conversa — nem aqui, nem em lugar nenhum.</li>
+      <li><strong>A regra final é do servidor.</strong> Se a skill instalada na sua máquina
+      discordar do que o MMX manda, o MMX vence. Ela é uma cópia; ele é a fonte.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="meta">
+    <span class="ver">mmx-operador · v1.1.0</span>
+    <span>Código aberto, licença Apache 2.0 —
+      <a href="https://github.com/mentoringmx/mmx-skills">github.com/mentoringmx/mmx-skills</a></span>
+  </div>
+</footer>
+
+</div>
