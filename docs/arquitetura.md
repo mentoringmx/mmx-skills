@@ -25,8 +25,8 @@ O **`get_playbook`** entrega a sequência de chamadas de uma operação específ
 demanda. É o que impede o agente de reproduzir de memória uma sequência que mudou.
 
 A **skill e os comandos** deste repositório adicionam o que o protocolo não carrega:
-formato de conversa, o fechamento de encontro a partir de transcrição e cinco atalhos de
-digitação.
+formato de conversa, o fechamento de encontro a partir de transcrição, a importação de ficha
+em PDF e seis atalhos de digitação.
 
 ## Por que os playbooks não moram aqui
 

@@ -19,7 +19,7 @@ Quem só quer operar o MMX conecta o MCP e pronto. Um agente sem nada deste repo
 opera com a mesma segurança e segue exatamente as mesmas regras.
 
 O que está aqui é conveniência opcional: o formato de conversa, o fechamento de encontro a
-partir de transcrição e cinco atalhos de digitação. Se você usa ChatGPT, n8n ou um agente
+partir de transcrição, a importação de ficha em PDF e seis atalhos de digitação. Se você usa ChatGPT, n8n ou um agente
 próprio, nada disto se aplica a você e você não está perdendo nada.
 
 ## Comece pelo produto
@@ -52,9 +52,10 @@ passo com telas.
 
 | Item | O que faz | Equivalente em português |
 |---|---|---|
-| Skill `mmx-operador` | Camada de conversa: formato do plano e do ledger, fechamento por transcrição, cuidado com dado pessoal mascarado, o que fazer sem o MCP conectado | Ativa sozinha, você não chama |
+| Skill `mmx-operador` | Camada de conversa: formato do plano e do ledger, fechamento por transcrição, importação de ficha em PDF, cuidado com dado pessoal mascarado, o que fazer sem o MCP conectado | Ativa sozinha, você não chama |
 | `/mmx-carteira` | Panorama de leitura: saúde, encontros sem debrief, tasks vencidas, funil. Não grava nada | "como está minha carteira" |
 | `/mmx-fechar-sessao` | Decompõe a transcrição em debrief, conquistas, tasks, jornada, saúde e notas | "fecha a sessão que acabei de dar" |
+| `/mmx-importar-ficha` | Importa a ficha consolidada do mentorado (PDF) em pessoa, negócio, diagnóstico, objetivo, métrica, encontros, trilha e notas | "importa a ficha do Rafael" |
 | `/mmx-incluir` | Inclui e matricula mentorado, com deduplicação e posição na trilha | "cadastra o Rafael no Acelera" |
 | `/mmx-jornada` | Move estágio, marca checklist, lança saúde | "põe a Marina na próxima etapa" |
 | `/mmx-lead` | Registra ou movimenta lead no CRM, com atividade, objeção e conversão | "entrou um lead novo" |
