@@ -1,6 +1,6 @@
 # Contribuindo
 
-Este repositório distribui a skill `mmx-operador` e cinco comandos. É uma camada de
+Este repositório distribui a skill `mmx-operador` e seis comandos. É uma camada de
 conveniência — o contrato de operação do MMX vive no servidor. Vale ler
 [`docs/arquitetura.md`](docs/arquitetura.md) antes de abrir qualquer coisa aqui, porque
 boa parte das contribuições que chegam pertence a outro lugar.

@@ -5,7 +5,7 @@ pela tela do produto: aviso “Opere o MentoringMX conversando com seu agente de
 já opera o MentoringMX com o contrato completo, sem instalar nada.
 
 Instalar a skill e os comandos é opcional e posterior. O que eles adicionam é
-conveniência: formato de conversa, fechamento de encontro a partir de transcrição e cinco
+conveniência: formato de conversa, fechamento de encontro a partir de transcrição, importação de ficha em PDF e seis
 atalhos.
 
 ## Autenticação
@@ -24,7 +24,7 @@ repositório: a entrada do plugin aponta para uma tag específica.
 "source": {
   "source": "url",
   "url": "https://github.com/mentoringmx/mmx-skills.git",
-  "ref": "v1.1.1"
+  "ref": "v1.2.0"
 }
 ```
 
@@ -55,8 +55,8 @@ claude plugin list
 claude plugin details mmx-operador@mentoringmx
 ```
 
-O `details` mostra o inventário de componentes — a skill e os cinco comandos — e o custo
-de contexto projetado. Espere ver `mmx-operador` na versão `1.0.0`, uma skill e cinco
+O `details` mostra o inventário de componentes — a skill e os seis comandos — e o custo
+de contexto projetado. Espere ver `mmx-operador` na versão `1.2.0`, uma skill e seis
 comandos, e nenhum hook, agente ou servidor MCP: este plugin não traz nenhum dos três.
 
 Remover:
