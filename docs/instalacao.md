@@ -24,7 +24,7 @@ repositório: a entrada do plugin aponta para uma tag específica.
 "source": {
   "source": "url",
   "url": "https://github.com/mentoringmx/mmx-skills.git",
-  "ref": "v1.2.0"
+  "ref": "v1.2.1"
 }
 ```
 
@@ -56,7 +56,7 @@ claude plugin details mmx-operador@mentoringmx
 ```
 
 O `details` mostra o inventário de componentes — a skill e os seis comandos — e o custo
-de contexto projetado. Espere ver `mmx-operador` na versão `1.2.0`, uma skill e seis
+de contexto projetado. Espere ver `mmx-operador` na versão `1.2.1`, uma skill e seis
 comandos, e nenhum hook, agente ou servidor MCP: este plugin não traz nenhum dos três.
 
 Remover:
