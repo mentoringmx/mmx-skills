@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Cinco checagens mecanicas. Nenhuma delas olha o conteudo do texto.
+"""Seis checagens mecanicas. Nenhuma delas olha o conteudo do texto.
 
 Os arquivos sao quebrados em ~90 colunas, entao regra por proximidade de palavra
 reprovaria pela quebra de linha, nao pelo conteudo. Esse controle pertence ao
@@ -77,6 +77,23 @@ for skill_md in skills:
     if fm.get("name") != pasta:
         erro(f"[2] {rel}: name '{fm.get('name')}' != nome da pasta '{pasta}'")
 
+# 6. description de skill e de comando cabe no limite do runtime. Acima de 1024
+#    caracteres o Claude sincroniza o marketplace com aviso e o claude.ai guarda a
+#    descricao cortada, perdendo os gatilhos do fim. A 1.2.0 saiu com 1507.
+LIMITE_DESCRICAO = 1024
+
+
+def conferir_tamanho(rel, descricao):
+    if len(descricao) > LIMITE_DESCRICAO:
+        erro(f"[6] {rel}: description com {len(descricao)} caracteres (limite {LIMITE_DESCRICAO})")
+
+
+for skill_md in skills:
+    try:
+        conferir_tamanho(skill_md.relative_to(ROOT), str(frontmatter_yaml(skill_md).get("description", "")).strip())
+    except (ValueError, yaml.YAMLError):
+        pass  # ja reprovado na checagem 1
+
 # 3. Todo arquivo em commands/ tem frontmatter com description nao vazio.
 comandos = sorted((ROOT / "commands").glob("*.md"))
 if not comandos:
@@ -91,6 +108,7 @@ for cmd in comandos:
         continue
     if not fm.get("description", "").strip():
         erro(f"[3] {rel}: 'description' ausente ou vazio")
+    conferir_tamanho(rel, fm.get("description", "").strip())
 
 # 4. marketplace.json e JSON valido, todo caminho local que ele cita existe, e o name
 #    da entrada bate com o name do plugin.json.
@@ -162,4 +180,4 @@ if falhas:
         print(f"  {f}")
     sys.exit(1)
 
-print("As cinco checagens passaram.")
+print("As seis checagens passaram.")

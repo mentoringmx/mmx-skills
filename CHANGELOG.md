@@ -7,6 +7,18 @@ versionamento segue [SemVer](https://semver.org/lang/pt-BR/).
 
 ## [Não publicado]
 
+## [1.2.1] - 2026-10-05
+
+### Corrigido
+
+- A `description` da skill tinha 1.507 caracteres, acima do limite de 1.024: o Claude
+  sincroniza o marketplace com aviso ("field 'description' in SKILL.md must be at most 1024
+  characters") e o claude.ai guarda a descrição cortada, perdendo os gatilhos do fim, que eram
+  justamente os da importação de ficha. Reescrita em 788 caracteres, com os mesmos
+  gatilhos. O texto já passava do limite na 1.1.1 (1.151); a 1.2.0 só aumentou.
+- O CI ganha a sexta checagem: `description` de skill e de comando com no máximo 1.024
+  caracteres. Era o que faltava para o PR da 1.2.0 ter reprovado.
+
 ## [1.2.0] - 2026-10-02
 
 Acompanha o servidor MMX 0.41: playbook `importar-ficha`, `create_metric_definition` e

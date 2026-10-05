@@ -47,8 +47,8 @@ Todo PR que mexe em `skills/` ou `commands/` **diz na descrição qual comportam
 agente muda**. Não o que o arquivo passou a dizer — o que o agente passa a fazer
 diferente, e em que situação.
 
-O CI roda cinco checagens mecânicas: frontmatter da skill, nome batendo com a pasta,
-`description` em todo comando, manifesto válido com os caminhos existindo, e ausência de
+O CI roda seis checagens mecânicas: frontmatter da skill, nome batendo com a pasta,
+`description` em todo comando, `description` com no máximo 1.024 caracteres, manifesto válido com os caminhos existindo, e ausência de
 credencial ou URL de fetch. Elas são mecânicas de propósito. Se você achar que falta uma
 checagem de conteúdo, provavelmente ela pertence ao repositório do servidor, onde ficam as
 descrições dos tools.
